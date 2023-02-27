@@ -1,46 +1,57 @@
-<!-- HTML form for users to select the number of tickets -->
-<form id="ticket-form">
-  <label for="num-tickets">Number of tickets:</label>
-  <input type="number" id="num-tickets" name="num-tickets" min="1" max="10">
-  <button type="submit">Add tickets to pool</button>
-</form>
+// Set up variables
+let ticketCount = 0;
+const ticketPrice = 1;
 
-<!-- HTML display for the current number of tickets in the pool -->
-<div id="ticket-count"></div>
+// Set up functions
+function addTickets() {
+  const input = document.querySelector('input[type="number"]');
+  const numTickets = Number(input.value);
+  ticketCount += numTickets;
+  updateTicketCount();
+  input.value = "";
+}
 
-<!-- HTML display for the winning ticket number -->
-<div id="winning-ticket"></div>
+function updateTicketCount() {
+  const countElement = document.getElementById("ticketCount");
+  countElement.textContent = ticketCount;
+}
 
-<script>
-  // Define a global array to store the ticket numbers in the pool
-  var ticketPool = [];
+function buyTickets() {
+  const totalCost = ticketCount * ticketPrice;
+  alert(`Total cost: $${totalCost.toFixed(2)}`);
+  ticketCount = 0;
+  updateTicketCount();
+}
 
-  // Define a function to update the display of the ticket count
-  function updateTicketCount() {
-    var ticketCountDisplay = document.getElementById("ticket-count");
-    ticketCountDisplay.innerText = "Number of tickets in pool: " + ticketPool.length;
+function drawWinner() {
+  const winner = Math.floor(Math.random() * ticketCount) + 1;
+  alert(`The winner is ticket number ${winner}!`);
+  ticketCount = 0;
+  updateTicketCount();
+}
+
+// Set up DOM event listeners
+document.getElementById("addTickets").addEventListener("click", addTickets);
+document.getElementById("buyTickets").addEventListener("click", buyTickets);
+document.getElementById("drawWinner").addEventListener("click", drawWinner);
+
+// Set up countdown timer
+const timerElement = document.getElementById("countdown");
+const endTime = new Date("2023-03-01T00:00:00Z").getTime();
+const intervalId = setInterval(() => {
+  const now = new Date().getTime();
+  const timeRemaining = endTime - now;
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+  );
+  const minutes = Math.floor(
+    (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+  );
+  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+  timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  if (timeRemaining < 0) {
+    clearInterval(intervalId);
+    timerElement.textContent = "EXPIRED";
   }
-
-  // Define an event listener for the form submission
-  var ticketForm = document.getElementById("ticket-form");
-  ticketForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-    var numTickets = parseInt(document.getElementById("num-tickets").value);
-    for (var i = 0; i < numTickets; i++) {
-      // Generate a random ticket number and add it to the pool
-      var newTicketNumber = Math.floor(Math.random() * 1000000);
-      ticketPool.push(newTicketNumber);
-    }
-    updateTicketCount();
-  });
-
-  // Define a function to conduct the weekly draw
-  function conductWeeklyDraw() {
-    var winningTicketDisplay = document.getElementById("winning-ticket");
-    var winningTicketNumber = ticketPool[Math.floor(Math.random() * ticketPool.length)];
-    winningTicketDisplay.innerText = "The winning ticket number is: " + winningTicketNumber;
-  }
-
-  // Schedule the weekly draw to occur every Saturday at 8:00 PM
-  setInterval(conductWeeklyDraw, 7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
-</script>
+}, 1000);
