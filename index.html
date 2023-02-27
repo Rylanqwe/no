@@ -2,15 +2,20 @@
 <html>
 <head>
 	<title>Weekly Pool</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<h1>Weekly Pool</h1>
-	<p>Select the number of "tickets" you want to add to the pool:</p>
-	<input type="number" id="numTickets" min="1" max="100">
-	<button onclick="addTickets()">Add Tickets</button>
-	<p id="ticketCount">0</p>
-	<button onclick="drawWinner()">Draw Winner</button>
-	<p id="winner"></p>
+	<div class="container">
+		<h1>Weekly Pool</h1>
+		<p class="subheading">Select the number of "tickets" you want to add to the pool:</p>
+		<div class="input-container">
+			<input type="number" id="numTickets" min="1" max="100">
+			<button onclick="addTickets()">Add Tickets</button>
+		</div>
+		<p id="ticketCount">Total pool count: 0</p>
+		<button onclick="drawWinner()">Draw Winner</button>
+		<p id="winner"></p>
+	</div>
 	<script src="weeklypool.js"></script>
 </body>
 </html>
