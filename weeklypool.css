@@ -1,90 +1,47 @@
-/* Body styles */
 body {
-	background-color: #1d1d1d;
-	color: #fff;
-	font-family: Arial, sans-serif;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
+  background-color: black;
+  color: gold;
+  font-family: sans-serif;
 }
 
-/* Container styles */
 .container {
-	background-color: #ffd700;
-	border-radius: 10px;
-	padding: 30px;
-	max-width: 400px;
-	width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-/* Heading styles */
-h1 {
-	color: #000;
-	text-align: center;
-	margin-top: 0;
-	margin-bottom: 20px;
-	font-size: 36px;
+.header {
+  font-size: 3em;
+  margin-bottom: 0.5em;
+  text-align: center;
 }
 
-/* Subheading styles */
-.subheading {
-	font-size: 20px;
-	line-height: 1.5;
-	margin-bottom: 10px;
-	text-align: center;
+.ticketBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid gold;
+  padding: 1em;
+  margin-bottom: 1em;
 }
 
-/* Input container styles */
-.input-container {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	margin-bottom: 20px;
+.ticketBox label {
+  margin-right: 0.5em;
 }
 
-/* Input field styles */
-input[type="number"] {
-	border: 1px solid #000;
-	border-radius: 4px;
-	box-sizing: border-box;
-	padding: 10px 16px;
-	width: 70%;
-	font-size: 18px;
+.ticketBox input {
+  width: 3em;
 }
 
-/* Button styles */
-button {
-	background-color: #000;
-	border: none;
-	border-radius: 4px;
-	color: #fff;
-	cursor: pointer;
-	font-size: 18px;
-	padding: 10px 16px;
-	width: 28%;
+.ticketPool {
+  margin-top: 0.5em;
 }
 
-/* Ticket count display styles */
-#ticketCount {
-	font-size: 18px;
-	line-height: 1.5;
-	margin-top: 20px;
-	text-align: center;
-}
-
-/* Winner display styles */
-#winner {
-	font-size: 24px;
-	font-weight: bold;
-	text-align: center;
-	margin-top: 20px;
-}
-	
-.ticketBox label {	
-  	color: black;
-
-
+.countdownBox {
+  font-size: 1.5em;
+  text-align: center;
+  border: 2px solid gold;
+  padding: 1em;
 }
