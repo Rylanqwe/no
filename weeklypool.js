@@ -1,60 +1,94 @@
-// Set up variables
-let ticketCount = 0;
-const ticketPrice = 1;
+// Define variables
+let poolSize = 0;
+let tickets = [];
+let weeklyDraw = null;
+let timerInterval = null;
+const drawDay = 5; // Friday
+const drawHour = 20; // 8pm
+const ticketPrice = 10;
+const poolDisplay = document.getElementById('pool-size');
+const timerDisplay = document.getElementById('timer');
+const ticketCountDisplay = document.getElementById('ticket-count');
+const buyForm = document.getElementById('buy-form');
+const buyInput = document.getElementById('buy-input');
+const buyButton = document.getElementById('buy-button');
 
-// Set up functions
-function addTickets() {
-  const input = document.querySelector('input[type="number"]');
-  const numTickets = Number(input.value);
-  ticketCount += numTickets;
-  updateTicketCount();
-  input.value = "";
+// Function to update pool size display
+function updatePoolDisplay() {
+  poolDisplay.textContent = `$${poolSize}`;
 }
 
-function updateTicketCount() {
-  const countElement = document.getElementById("ticketCount");
-  countElement.textContent = ticketCount;
+// Function to add tickets to the pool
+function addTickets(count) {
+  const newTickets = Array(count).fill().map((_, index) => ({
+    number: tickets.length + index + 1,
+  }));
+  tickets.push(...newTickets);
+  poolSize += count * ticketPrice;
+  updatePoolDisplay();
 }
 
-function buyTickets() {
-  const totalCost = ticketCount * ticketPrice;
-  alert(`Total cost: $${totalCost.toFixed(2)}`);
-  ticketCount = 0;
-  updateTicketCount();
+// Function to update ticket count display
+function updateTicketCountDisplay() {
+  ticketCountDisplay.textContent = tickets.length;
 }
 
-function drawWinner() {
-  const winner = Math.floor(Math.random() * ticketCount) + 1;
-  alert(`The winner is ticket number ${winner}!`);
-  ticketCount = 0;
-  updateTicketCount();
-}
-
-// Set up DOM event listeners
-document.getElementById("addTickets").addEventListener("click", addTickets);
-document.getElementById("buyTickets").addEventListener("click", buyTickets);
-
-// Set up countdown timer
-const timerElement = document.getElementById("countdown");
-const drawTime = new Date("2023-03-01T00:00:00Z").getTime();
-const intervalId = setInterval(() => {
-  const now = new Date().getTime();
-  const timeRemaining = drawTime - now;
-  if (timeRemaining <= 0) {
-    clearInterval(intervalId);
-    drawWinner();
-    const nextDrawTime = new Date(drawTime + 7 * 24 * 60 * 60 * 1000);
-    drawTime = nextDrawTime.getTime();
-    setInterval(updateCountdown, 1000);
-  } else {
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    const minutes = Math.floor(
-      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-    );
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-    timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+// Function to handle buying form submission
+function handleBuyFormSubmit(event) {
+  event.preventDefault();
+  const count = parseInt(buyInput.value, 10);
+  if (isNaN(count) || count <= 0) {
+    alert('Please enter a valid ticket count.');
+    return;
   }
-}, 1000);
+  addTickets(count);
+  updateTicketCountDisplay();
+  buyInput.value = '';
+}
+
+// Function to pick a random winner and reset the pool
+function pickWinner() {
+  const winnerIndex = Math.floor(Math.random() * tickets.length);
+  const winner = tickets[winnerIndex];
+  alert(`The winner is ticket number ${winner.number}!`);
+  tickets = [];
+  poolSize = 0;
+  updatePoolDisplay();
+  updateTicketCountDisplay();
+}
+
+// Function to check if it's time for the weekly draw
+function checkWeeklyDraw() {
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // Sunday is 0, Saturday is 6
+  const hourOfDay = now.getHours();
+  if (dayOfWeek === drawDay && hourOfDay >= drawHour) {
+    clearInterval(timerInterval);
+    pickWinner();
+    scheduleNextWeeklyDraw();
+  } else {
+    const nextDrawDate = getNextWeeklyDrawDate();
+    const timeLeft = nextDrawDate - now;
+    const secondsLeft = Math.floor(timeLeft / 1000);
+    const minutesLeft = Math.floor(secondsLeft / 60);
+    const hoursLeft = Math.floor(minutesLeft / 60);
+    const daysLeft = Math.floor(hoursLeft / 24);
+    const remainingTime = `${daysLeft} days, ${hoursLeft % 24} hours, ${minutesLeft % 60} minutes, ${secondsLeft % 60} seconds`;
+    timerDisplay.textContent = `Next draw in: ${remainingTime}`;
+  }
+}
+
+// Function to schedule the next weekly draw
+function scheduleNextWeeklyDraw() {
+  const nextDrawDate = getNextWeeklyDrawDate();
+  const timeUntilDraw = nextDrawDate - Date.now();
+  timerInterval = setInterval(checkWeeklyDraw, 1000);
+  setTimeout(pickWinner, timeUntilDraw);
+}
+
+// Function to get the date of the next weekly draw
+function getNextWeeklyDrawDate() {
+  const now = new Date();
+  let nextDrawDate = new Date(now);
+  if (now.getDay() > drawDay || (now.getDay() === drawDay && now.getHours() >= drawHour)) {
+    nextDrawDate.setDate(now.getDate() + (7 - now.getDay() + draw
