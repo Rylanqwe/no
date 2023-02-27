@@ -33,25 +33,28 @@ function drawWinner() {
 // Set up DOM event listeners
 document.getElementById("addTickets").addEventListener("click", addTickets);
 document.getElementById("buyTickets").addEventListener("click", buyTickets);
-document.getElementById("drawWinner").addEventListener("click", drawWinner);
 
 // Set up countdown timer
 const timerElement = document.getElementById("countdown");
-const endTime = new Date("2023-03-01T00:00:00Z").getTime();
+const drawTime = new Date("2023-03-01T00:00:00Z").getTime();
 const intervalId = setInterval(() => {
   const now = new Date().getTime();
-  const timeRemaining = endTime - now;
-  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-  const hours = Math.floor(
-    (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
-  const minutes = Math.floor(
-    (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-  );
-  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-  timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  if (timeRemaining < 0) {
+  const timeRemaining = drawTime - now;
+  if (timeRemaining <= 0) {
     clearInterval(intervalId);
-    timerElement.textContent = "EXPIRED";
+    drawWinner();
+    const nextDrawTime = new Date(drawTime + 7 * 24 * 60 * 60 * 1000);
+    drawTime = nextDrawTime.getTime();
+    setInterval(updateCountdown, 1000);
+  } else {
+    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    const minutes = Math.floor(
+      (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+    timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
   }
 }, 1000);
