@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Weekly Pool</title>
+</head>
+<body>
+	<h1>Weekly Pool</h1>
+	<p>Select the number of "tickets" you want to add to the pool:</p>
+	<input type="number" id="numTickets" min="1" max="100">
+	<button onclick="addTickets()">Add Tickets</button>
+	<p id="ticketCount">0</p>
+	<button onclick="drawWinner()">Draw Winner</button>
+	<p id="winner"></p>
+	<script src="weeklypool.js"></script>
+</body>
+</html>
