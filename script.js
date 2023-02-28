@@ -1,94 +1,91 @@
-// Define variables
-let poolSize = 0;
-let tickets = [];
-let weeklyDraw = null;
-let timerInterval = null;
-const drawDay = 5; // Friday
-const drawHour = 20; // 8pm
-const ticketPrice = 10;
-const poolDisplay = document.getElementById('pool-size');
-const timerDisplay = document.getElementById('timer');
-const ticketCountDisplay = document.getElementById('ticket-count');
-const buyForm = document.getElementById('buy-form');
-const buyInput = document.getElementById('buy-input');
-const buyButton = document.getElementById('buy-button');
+// get DOM elements
+const ticketCountEl = document.getElementById('ticket-count');
+const ticketFormEl = document.getElementById('ticket-form');
+const ticketInputEl = document.getElementById('ticket-input');
+const poolTotalEl = document.getElementById('pool-total');
+const winnerDisplayEl = document.getElementById('winner-display');
+const timerDisplayEl = document.getElementById('timer-display');
 
-// Function to update pool size display
-function updatePoolDisplay() {
-  poolDisplay.textContent = `$${poolSize}`;
+// initialize variables
+let ticketCount = 0;
+let poolTotal = 0;
+let ticketsBought = [];
+
+// function to update ticket count and pool total
+function updateTicketCountAndPoolTotal() {
+  ticketCountEl.innerText = ticketCount;
+  poolTotalEl.innerText = `$${poolTotal.toFixed(2)}`;
 }
 
-// Function to add tickets to the pool
-function addTickets(count) {
-  const newTickets = Array(count).fill().map((_, index) => ({
-    number: tickets.length + index + 1,
-  }));
-  tickets.push(...newTickets);
-  poolSize += count * ticketPrice;
-  updatePoolDisplay();
+// function to add tickets to pool
+function addTicketsToPool(ticketNumber) {
+  ticketsBought = ticketsBought.concat(Array.from({ length: ticketNumber }, (_, i) => i + ticketCount + 1));
+  ticketCount += ticketNumber;
+  poolTotal += ticketNumber * 2;
+  updateTicketCountAndPoolTotal();
 }
 
-// Function to update ticket count display
-function updateTicketCountDisplay() {
-  ticketCountDisplay.textContent = tickets.length;
+// function to select a winner
+function selectWinner() {
+  const winningTicketIndex = Math.floor(Math.random() * ticketsBought.length);
+  const winningTicketNumber = ticketsBought[winningTicketIndex];
+  winnerDisplayEl.innerText = `The winner is ticket number ${winningTicketNumber}!`;
 }
 
-// Function to handle buying form submission
-function handleBuyFormSubmit(event) {
+// function to start timer
+function startTimer() {
+  const now = new Date();
+  const nextDraw = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, 20, 0, 0); // every 7 days at 8pm
+  const timeUntilNextDraw = nextDraw - now;
+  
+  let secondsLeft = Math.floor(timeUntilNextDraw / 1000);
+  let minutesLeft = Math.floor(secondsLeft / 60);
+  let hoursLeft = Math.floor(minutesLeft / 60);
+  let daysLeft = Math.floor(hoursLeft / 24);
+
+  hoursLeft %= 24;
+  minutesLeft %= 60;
+  secondsLeft %= 60;
+
+  timerDisplayEl.innerText = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+
+  setInterval(() => {
+    secondsLeft--;
+    if (secondsLeft < 0) {
+      secondsLeft = 59;
+      minutesLeft--;
+      if (minutesLeft < 0) {
+        minutesLeft = 59;
+        hoursLeft--;
+        if (hoursLeft < 0) {
+          hoursLeft = 23;
+          daysLeft--;
+          if (daysLeft < 0) {
+            clearInterval(timer);
+            timerDisplayEl.innerText = 'Draw over!';
+          }
+        }
+      }
+    }
+    timerDisplayEl.innerText = `${daysLeft}d ${hoursLeft}h ${minutesLeft}m ${secondsLeft}s`;
+  }, 1000);
+}
+
+// handle form submission
+ticketFormEl.addEventListener('submit', (event) => {
   event.preventDefault();
-  const count = parseInt(buyInput.value, 10);
-  if (isNaN(count) || count <= 0) {
-    alert('Please enter a valid ticket count.');
-    return;
+  const ticketNumber = parseInt(ticketInputEl.value);
+  if (!isNaN(ticketNumber) && ticketNumber > 0) {
+    addTicketsToPool(ticketNumber);
+    ticketInputEl.value = '';
   }
-  addTickets(count);
-  updateTicketCountDisplay();
-  buyInput.value = '';
-}
+});
 
-// Function to pick a random winner and reset the pool
-function pickWinner() {
-  const winnerIndex = Math.floor(Math.random() * tickets.length);
-  const winner = tickets[winnerIndex];
-  alert(`The winner is ticket number ${winner.number}!`);
-  tickets = [];
-  poolSize = 0;
-  updatePoolDisplay();
-  updateTicketCountDisplay();
-}
-
-// Function to check if it's time for the weekly draw
-function checkWeeklyDraw() {
+// select winner on click
+setInterval(() => {
   const now = new Date();
-  const dayOfWeek = now.getDay(); // Sunday is 0, Saturday is 6
-  const hourOfDay = now.getHours();
-  if (dayOfWeek === drawDay && hourOfDay >= drawHour) {
-    clearInterval(timerInterval);
-    pickWinner();
-    scheduleNextWeeklyDraw();
-  } else {
-    const nextDrawDate = getNextWeeklyDrawDate();
-    const timeLeft = nextDrawDate - now;
-    const secondsLeft = Math.floor(timeLeft / 1000);
-    const minutesLeft = Math.floor(secondsLeft / 60);
-    const hoursLeft = Math.floor(minutesLeft / 60);
-    const daysLeft = Math.floor(hoursLeft / 24);
-    const remainingTime = `${daysLeft} days, ${hoursLeft % 24} hours, ${minutesLeft % 60} minutes, ${secondsLeft % 60} seconds`;
-    timerDisplay.textContent = `Next draw in: ${remainingTime}`;
+  if (now.getDay() === 4 && now.getHours() === 20 && now.getMinutes() === 0 && now.getSeconds() === 0) { // every Thursday at 8pm
+    selectWinner();
+    startTimer();
   }
-}
-
-// Function to schedule the next weekly draw
-function scheduleNextWeeklyDraw() {
-  const nextDrawDate = getNextWeeklyDrawDate();
-  const timeUntilDraw = nextDrawDate - Date.now();
-  timerInterval = setInterval(checkWeeklyDraw, 1000);
-  setTimeout(pickWinner, timeUntilDraw);
-}
-
-// Function to get the date of the next weekly draw
-function getNextWeeklyDrawDate() {
-  const now = new Date();
-  let nextDrawDate = new Date(now);
-  if (now.getDay() > drawDay || (now.getDay() === drawDay && now.getHours() >= drawHour)) {
-    nextDrawDate.setDate(now.getDate() + (7 - now.getDay() + draw
+}, 1000);
