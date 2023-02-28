@@ -1,35 +1,63 @@
-.lottery-title {
-  text-align: center;
+body {
+  font-family: Arial, sans-serif;
+  background-color: black;
   color: gold;
-  font-size: 50px;
+  text-align: center;
+  margin: 0;
+}
+
+.title {
+  font-size: 48px;
+  margin-top: 20px;
 }
 
 .lottery-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: black;
-  height: 300px;
-  width: 500px;
-  margin: auto;
-  margin-top: 50px;
+  background-color: gold;
+  padding: 20px;
   border-radius: 10px;
+  display: inline-block;
+  margin-top: 20px;
 }
 
-.lottery-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: black;
+.lottery-box input[type="number"] {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.pool-text {
+.lottery-box button {
+  margin-left: 10px;
+}
+
+.lottery-status {
+  background-color: gold;
+  padding: 20px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.lottery-status p {
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 24px;
+}
+
+.ticket-count {
   font-size: 20px;
-  font-weight: bold;
+}
+
+.ticket-cost {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.time-left {
+  font-size: 20px;
   margin-bottom: 10px;
 }
 
-.pool-amount {
-  font-size: 25px;
+.pool-size {
+  font-size: 20px;
+  margin-bottom: 10
