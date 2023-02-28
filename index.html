@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Crypto City Lottery</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-  <h1 class="lottery-title">Crypto City Lottery</h1>
-  <div class="lottery-box">
-    <div class="lottery-text">
-      <p class="pool-text">Total Pool:</p>
-      <p id="pool-total" class="pool-amount">0</p>
-      <p class="ticket-text">Total Tickets:</p>
-      <p id="ticket-count" class="ticket-amount">0</p>
-      <p class="time-text">Time Left:</p>
-      <p id="countdown" class="time-amount"></p>
+<html>
+  <head>
+    <title>Crypto City Lottery</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1 class="title">Crypto City Lottery</h1>
+    <div class="lottery-box">
+      <h2 class="subtitle">Buy Lottery Tickets</h2>
+      <p class="ticket-count">Total Tickets: <span id="total-tickets">0</span></p>
+      <input type="number" id="num-tickets" min="1" max="10">
+      <button id="buy-tickets-btn">Buy Tickets</button>
+      <p class="ticket-cost">Ticket Cost: 1 ETH</p>
     </div>
-    <div class="buy-box">
-      <p class="buy-text">Buy Tickets:</p>
-      <button onclick="addTicket()">+</button>
+    <div class="lottery-status">
+      <h2 class="subtitle">Lottery Status</h2>
+      <p class="time-left">Time Left: <span id="time-left"></span></p>
+      <p class="pool-size">Pool Size: <span id="pool-size">0 ETH</span></p>
+      <p class="winner">Winner: <span id="winner"></span></p>
     </div>
-  </div>
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
