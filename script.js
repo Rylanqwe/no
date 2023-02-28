@@ -1,65 +1,61 @@
 // Define variables
-let ticketPrice = 1;
-let ticketCount = 0;
-let totalPool = 0;
-let ticketsBought = 0;
-let timerInterval = null;
+let totalTickets = 0;
+let poolSize = 0;
+let timeLeft = 604800; // 1 week in seconds
+let countdownInterval;
 
-// Get HTML elements
-const buyButton = document.getElementById("buy-button");
-const ticketCountDisplay = document.getElementById("ticket-count");
-const totalPoolDisplay = document.getElementById("total-pool");
-const countdownDisplay = document.getElementById("countdown");
-const drawWinnerButton = document.getElementById("draw-winner-button");
-
-// Function to add tickets to the pool
-function addTickets(numTickets) {
-  ticketCount += numTickets;
-  totalPool += ticketPrice * numTickets;
-  ticketsBought += numTickets;
-  updateDisplays();
+// Function to update total tickets
+function updateTotalTickets(numTickets) {
+  totalTickets += numTickets;
+  document.getElementById("total-tickets").innerHTML = totalTickets;
 }
 
-// Function to update HTML displays
-function updateDisplays() {
-  ticketCountDisplay.innerHTML = ticketCount;
-  totalPoolDisplay.innerHTML = totalPool.toFixed(2);
+// Function to update pool size
+function updatePoolSize(numTickets) {
+  poolSize += numTickets;
+  document.getElementById("pool-size").innerHTML = poolSize + " ETH";
 }
 
-// Function to start the countdown timer
-function startTimer() {
-  const oneWeek = 604800000;
-  let drawDate = new Date().getTime() + oneWeek;
-
-  timerInterval = setInterval(function() {
-    let now = new Date().getTime();
-    let timeLeft = drawDate - now;
-
-    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-    countdownDisplay.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-
-    if (timeLeft < 0) {
-      clearInterval(timerInterval);
-      countdownDisplay.innerHTML = "EXPIRED";
+// Function to start countdown
+function startCountdown() {
+  countdownInterval = setInterval(function() {
+    timeLeft--;
+    const days = Math.floor(timeLeft / 86400);
+    const hours = Math.floor((timeLeft % 86400) / 3600);
+    const minutes = Math.floor((timeLeft % 3600) / 60);
+    const seconds = Math.floor(timeLeft % 60);
+    const timeLeftStr = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    document.getElementById("time-left").innerHTML = timeLeftStr;
+    if (timeLeft <= 0) {
+      clearInterval(countdownInterval);
       drawWinner();
     }
   }, 1000);
 }
 
-// Function to draw the winner
+// Function to draw winner
 function drawWinner() {
-  let winningTicket = Math.floor(Math.random() * ticketCount) + 1;
-  alert("The winner is ticket number " + winningTicket);
+  const winningTicket = Math.floor(Math.random() * totalTickets) + 1;
+  const winner = `Ticket ${winningTicket}`;
+  document.getElementById("winner").innerHTML = winner;
 }
 
-// Event listener for buy button
-buyButton.addEventListener("click", function() {
-  addTickets(1);
+// Event listener for buy tickets button
+document.getElementById("buy-tickets-btn").addEventListener("click", function() {
+  const numTickets = parseInt(document.getElementById("num-tickets").value);
+  if (isNaN(numTickets) || numTickets < 1 || numTickets > 10) {
+    alert("Please enter a valid number of tickets (1-10).");
+    return;
+  }
+  const ticketCost = numTickets;
+  const totalCost = ticketCost * numTickets;
+  if (totalCost > 0) {
+    updateTotalTickets(numTickets);
+    updatePoolSize(totalCost);
+  }
 });
 
-// Start the timer on page load
-window.onload = startTimer;
+// Start countdown on page load
+window.onload = function() {
+  startCountdown();
+};
