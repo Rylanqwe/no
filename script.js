@@ -1,41 +1,65 @@
+// Define variables
+let ticketPrice = 1;
 let ticketCount = 0;
-let ticketCost = 10;
-let poolTotal = 0;
+let totalPool = 0;
+let ticketsBought = 0;
+let timerInterval = null;
 
-function addTicket() {
-  ticketCount++;
-  updateTicketCount();
-  updatePoolTotal();
-}
+// Get HTML elements
+const buyButton = document.getElementById("buy-button");
+const ticketCountDisplay = document.getElementById("ticket-count");
+const totalPoolDisplay = document.getElementById("total-pool");
+const countdownDisplay = document.getElementById("countdown");
+const drawWinnerButton = document.getElementById("draw-winner-button");
 
+// Function to add tickets to the pool
 function addTickets(numTickets) {
   ticketCount += numTickets;
-  updateTicketCount();
-  updatePoolTotal();
+  totalPool += ticketPrice * numTickets;
+  ticketsBought += numTickets;
+  updateDisplays();
 }
 
-function updateTicketCount() {
-  document.getElementById("ticket-count").innerHTML = ticketCount;
+// Function to update HTML displays
+function updateDisplays() {
+  ticketCountDisplay.innerHTML = ticketCount;
+  totalPoolDisplay.innerHTML = totalPool.toFixed(2);
 }
 
-function updatePoolTotal() {
-  poolTotal = ticketCount * ticketCost;
-  document.getElementById("pool-total").innerHTML = poolTotal;
+// Function to start the countdown timer
+function startTimer() {
+  const oneWeek = 604800000;
+  let drawDate = new Date().getTime() + oneWeek;
+
+  timerInterval = setInterval(function() {
+    let now = new Date().getTime();
+    let timeLeft = drawDate - now;
+
+    let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    countdownDisplay.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+    if (timeLeft < 0) {
+      clearInterval(timerInterval);
+      countdownDisplay.innerHTML = "EXPIRED";
+      drawWinner();
+    }
+  }, 1000);
 }
 
-function countdown() {
-  let drawDate = new Date("2023-03-06T00:00:00Z"); // Change this to the date and time of the next draw
-  let now = new Date();
-  let timeLeft = drawDate.getTime() - now.getTime();
-
-  let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-  let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-  let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-  document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-
-  setTimeout(countdown, 1000);
+// Function to draw the winner
+function drawWinner() {
+  let winningTicket = Math.floor(Math.random() * ticketCount) + 1;
+  alert("The winner is ticket number " + winningTicket);
 }
 
-countdown();
+// Event listener for buy button
+buyButton.addEventListener("click", function() {
+  addTickets(1);
+});
+
+// Start the timer on page load
+window.onload = startTimer;
