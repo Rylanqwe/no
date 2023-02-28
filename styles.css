@@ -1,63 +1,72 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: black;
-  color: gold;
-  text-align: center;
-  margin: 0;
+	background-color: #000000;
+	color: #ffffff;
+	font-family: Arial, sans-serif;
+	text-align: center;
+	margin: 0;
 }
 
-.title {
-  font-size: 48px;
-  margin-top: 20px;
+h1 {
+	font-size: 3em;
+	margin: 20px 0;
+	color: #ffd700;
 }
 
-.lottery-box {
-  background-color: gold;
-  padding: 20px;
-  border-radius: 10px;
-  display: inline-block;
-  margin-top: 20px;
+.lottery-container {
+	background-color: #ffd700;
+	padding: 20px;
+	margin: 0 auto;
+	width: 80%;
+	max-width: 500px;
+	border-radius: 10px;
 }
 
-.lottery-box input[type="number"] {
-  margin-left: 10px;
-  margin-right: 10px;
+h2 {
+	font-size: 2em;
+	margin-bottom: 10px;
+	color: #000000;
 }
 
-.lottery-box button {
-  margin-left: 10px;
+p {
+	margin: 10px 0;
+	color: #000000;
 }
 
-.lottery-status {
-  background-color: gold;
-  padding: 20px;
-  border-radius: 10px;
-  display: inline-block;
-  margin-top: 20px;
+label {
+	display: block;
+	margin-bottom: 5px;
+	color: #000000;
 }
 
-.lottery-status p {
-  margin: 0;
+input[type="number"] {
+	width: 100%;
+	padding: 5px;
+	margin-bottom: 10px;
+	box-sizing: border-box;
+	border-radius: 5px;
+	border: none;
 }
 
-.subtitle {
-  font-size: 24px;
+button {
+	padding: 10px 20px;
+	background-color: #000000;
+	color: #ffd700;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-right: 10px;
 }
 
-.ticket-count {
-  font-size: 20px;
+button:hover {
+	background-color: #ffd700;
+	color: #000000;
 }
 
-.ticket-cost {
-  font-size: 16px;
-  margin-top: 10px;
+.pool-info {
+	margin-top: 20px;
+	font-size: 1.2em;
 }
 
-.time-left {
-  font-size: 20px;
-  margin-bottom: 10px;
+#countdown {
+	font-weight: bold;
 }
-
-.pool-size {
-  font-size: 20px;
-  margin-bottom: 10
