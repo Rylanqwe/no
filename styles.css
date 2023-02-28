@@ -1,47 +1,41 @@
-body {
-  background-color: black;
-  color: gold;
-  font-family: sans-serif;
+let ticketCount = 0;
+let ticketCost = 10;
+let poolTotal = 0;
+
+function addTicket() {
+  ticketCount++;
+  updateTicketCount();
+  updatePoolTotal();
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+function addTickets(numTickets) {
+  ticketCount += numTickets;
+  updateTicketCount();
+  updatePoolTotal();
 }
 
-.header {
-  font-size: 3em;
-  margin-bottom: 0.5em;
-  text-align: center;
+function updateTicketCount() {
+  document.getElementById("ticket-count").innerHTML = ticketCount;
 }
 
-.ticketBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 2px solid gold;
-  padding: 1em;
-  margin-bottom: 1em;
+function updatePoolTotal() {
+  poolTotal = ticketCount * ticketCost;
+  document.getElementById("pool-total").innerHTML = poolTotal;
 }
 
-.ticketBox label {
-  margin-right: 0.5em;
+function countdown() {
+  let drawDate = new Date("2023-03-06T00:00:00Z"); // Change this to the date and time of the next draw
+  let now = new Date();
+  let timeLeft = drawDate.getTime() - now.getTime();
+
+  let days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+  setTimeout(countdown, 1000);
 }
 
-.ticketBox input {
-  width: 3em;
-}
-
-.ticketPool {
-  margin-top: 0.5em;
-}
-
-.countdownBox {
-  font-size: 1.5em;
-  text-align: center;
-  border: 2px solid gold;
-  padding: 1em;
-}
+countdown();
