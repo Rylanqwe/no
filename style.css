@@ -1,50 +1,64 @@
 body {
-  background-color: black;
-  color: gold;
-  font-weight: bold;
-  text-align: center;
+	background-color: black;
+	color: gold;
+	text-align: center;
 }
 
-.container {
-  margin: 0 auto;
-  max-width: 600px;
-  padding: 20px;
+#header {
+	padding-top: 30px;
 }
 
-.logo {
-  font-size: 36px;
-  margin-bottom: 20px;
+h1 {
+	font-size: 50px;
+	font-weight: bold;
 }
 
 button {
-  background-color: gold;
-  color: black;
-  font-weight: bold;
-  padding: 10px 20px;
-  margin-bottom: 20px;
+	background-color: gold;
+	color: black;
+	padding: 10px;
+	border: none;
+	font-size: 20px;
+	margin-right: 20px;
+	cursor: pointer;
 }
 
-.ticketCounter {
-  font-size: 24px;
-  margin-bottom: 20px;
+#add-tickets {
+	margin-top: 30px;
 }
 
-.timer {
-  font-size: 24px;
-  margin-bottom: 20px;
+#total-tickets {
+	margin-top: 30px;
+	font-size: 25px;
 }
 
-.winnerList {
-  font-size: 24px;
-  margin-bottom: 10px;
+#timer {
+	margin-top: 30px;
+	font-size: 25px;
 }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+#winner {
+	margin-top: 20px;
+	font-size: 20px;
 }
 
-li {
-  margin-bottom: 5px;
+#winningTicket {
+	font-size: 50px;
+	font-weight: bold;
+}
+
+#past-winners {
+	margin-top: 30px;
+	font-size: 25px;
+}
+
+#winnerList {
+	margin-top: 10px;
+	padding-left: 0;
+	list-style: none;
+}
+
+#winnerList li {
+	margin-top: 10px;
+	font-weight: bold;
 }
