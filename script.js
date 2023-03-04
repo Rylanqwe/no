@@ -1,41 +1,72 @@
-let pool = [];
+// Global variables
+var ticketCount = 0;
+var tickets = [];
 
-function addTicket() {
-  let ticketInput = document.getElementById("ticket-input");
-  let ticketError = document.getElementById("ticket-error");
-
-  if (isNaN(ticketInput.value) || ticketInput.value == "") {
-    ticketError.innerHTML = "Please enter a valid ticket number.";
-    return;
-  }
-
-  let ticketNumber = parseInt(ticketInput.value);
-
-  if (pool.includes(ticketNumber)) {
-    ticketError.innerHTML = "This ticket number is already in the pool.";
-    return;
-  }
-
-  pool.push(ticketNumber);
-  ticketInput.value = "";
-  ticketError.innerHTML = "";
-  document.getElementById("pool-size").innerHTML = pool.length;
+// Function to load tickets from local storage
+function loadTickets() {
+	if (localStorage.getItem("tickets")) {
+		tickets = JSON.parse(localStorage.getItem("tickets"));
+		ticketCount = tickets.length;
+		updateTicketCount();
+	}
 }
 
+// Function to add tickets
+function addTickets() {
+	var input = document.getElementById("ticket-input").value.trim().split("\n");
+	for (var i = 0; i < input.length; i++) {
+		var ticket = input[i].trim();
+		if (ticket != "" && !tickets.includes(ticket)) {
+			tickets.push(ticket);
+			ticketCount++;
+		}
+	}
+	localStorage.setItem("tickets", JSON.stringify(tickets));
+	updateTicketCount();
+	document.getElementById("ticket-input").value = "";
+}
+
+// Function to clear tickets
+function clearTickets() {
+	tickets = [];
+	ticketCount = 0;
+	localStorage.removeItem("tickets");
+	updateTicketCount();
+}
+
+// Function to update ticket count display
+function updateTicketCount() {
+	document.getElementById("ticket-count").innerHTML = ticketCount;
+}
+
+// Function to start the timer
+function startTimer() {
+	var minutes = 10;
+	var seconds = 0;
+	setInterval(function() {
+		if (seconds == 0) {
+			minutes--;
+			seconds = 59;
+		} else {
+			seconds--;
+		}
+		var timerDisplay = minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+		document.getElementById("timer").innerHTML = timerDisplay;
+		if (minutes == 0 && seconds == 0) {
+			drawWinner();
+			minutes = 10;
+			seconds = 0;
+		}
+	}, 1000);
+}
+
+// Function to draw a winner
 function drawWinner() {
-  if (pool.length == 0) {
-    document.getElementById("winner").innerHTML = "No tickets in the pool.";
-    return;
-  }
+	var winnerIndex = Math.floor(Math.random() * ticketCount);
+	var winnerName = tickets[winnerIndex];
+	document.getElementById("winner-name").innerHTML = winnerName;
+	clearTickets();
+	loadTickets();
+}
 
-  let winnerIndex = Math.floor(Math.random() * pool.length);
-  let winner = pool[winnerIndex];
-  pool = [];
-
-  document.getElementById("winner").innerHTML = "The winner is ticket number " + winner + "!";
-  document.getElementById("pool-size").innerHTML = pool.length;
-
-  let countDownDate = new Date().getTime() + 600000; // 10 minutes from now
-
-  let x = setInterval(function() {
-   
+loadTickets();
