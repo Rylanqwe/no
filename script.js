@@ -1,72 +1,46 @@
-// Global variables
-var ticketCount = 0;
-var tickets = [];
+let ticketPool = [];
 
-// Function to load tickets from local storage
-function loadTickets() {
-	if (localStorage.getItem("tickets")) {
-		tickets = JSON.parse(localStorage.getItem("tickets"));
-		ticketCount = tickets.length;
-		updateTicketCount();
-	}
+function addTicket() {
+  let ticketNumber = document.getElementById("ticket-input").value;
+  if (ticketNumber !== "") {
+    ticketPool.push(parseInt(ticketNumber));
+    document.getElementById("ticket-pool").innerHTML = "";
+    for (let i = 0; i < ticketPool.length; i++) {
+      let listItem = document.createElement("li");
+      listItem.innerText = ticketPool[i];
+      document.getElementById("ticket-pool").appendChild(listItem);
+    }
+  }
 }
 
-// Function to add tickets
-function addTickets() {
-	var input = document.getElementById("ticket-input").value.trim().split("\n");
-	for (var i = 0; i < input.length; i++) {
-		var ticket = input[i].trim();
-		if (ticket != "" && !tickets.includes(ticket)) {
-			tickets.push(ticket);
-			ticketCount++;
-		}
-	}
-	localStorage.setItem("tickets", JSON.stringify(tickets));
-	updateTicketCount();
-	document.getElementById("ticket-input").value = "";
-}
-
-// Function to clear tickets
 function clearTickets() {
-	tickets = [];
-	ticketCount = 0;
-	localStorage.removeItem("tickets");
-	updateTicketCount();
+  ticketPool = [];
+  document.getElementById("ticket-pool").innerHTML = "";
 }
 
-// Function to update ticket count display
-function updateTicketCount() {
-	document.getElementById("ticket-count").innerHTML = ticketCount;
-}
-
-// Function to start the timer
-function startTimer() {
-	var minutes = 10;
-	var seconds = 0;
-	setInterval(function() {
-		if (seconds == 0) {
-			minutes--;
-			seconds = 59;
-		} else {
-			seconds--;
-		}
-		var timerDisplay = minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
-		document.getElementById("timer").innerHTML = timerDisplay;
-		if (minutes == 0 && seconds == 0) {
-			drawWinner();
-			minutes = 10;
-			seconds = 0;
-		}
-	}, 1000);
-}
-
-// Function to draw a winner
 function drawWinner() {
-	var winnerIndex = Math.floor(Math.random() * ticketCount);
-	var winnerName = tickets[winnerIndex];
-	document.getElementById("winner-name").innerHTML = winnerName;
-	clearTickets();
-	loadTickets();
+  let winner = ticketPool[Math.floor(Math.random() * ticketPool.length)];
+  document.getElementById("winner").innerText = winner;
+  clearTickets();
 }
 
-loadTickets();
+function updateCountdown() {
+  let countdownElement = document.getElementById("countdown");
+  let seconds = 600;
+  let countdownInterval = setInterval(function() {
+    let minutes = Math.floor(seconds / 60);
+    let remainingSeconds = seconds % 60;
+    countdownElement.innerHTML = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    seconds--;
+    if (seconds < 0) {
+      clearInterval(countdownInterval);
+      drawWinner();
+      updateCountdown();
+    }
+  }, 1000);
+}
+
+document.getElementById("add-ticket-button").addEventListener("click", addTicket);
+document.getElementById("clear-tickets-button").addEventListener("click", clearTickets);
+
+updateCountdown();
