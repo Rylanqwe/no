@@ -1,23 +1,30 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Crypto City Lottery</title>
-	<link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-	<div id="header">
-		<h1>Crypto City Lottery</h1>
-	</div>
-	<div id="main">
-		<div id="pool">
-			<h2>Pool Total:</h2>
-			<p id="pool-total">$0</p>
-			<h2>Tickets Purchased:</h2>
-			<p id="tickets-purchased">0</p>
-			<h2 id="draw-timer"></h2>
-			<button id="clear-button">Clear Tickets</button>
-		</div>
-		<div id="tickets">
-			<h2>Buy Tickets:</h2
-<body>
-        <script type="text/javascript" src="script.js"></script>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Crypto City Lottery</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="header">
+      <h1>Crypto City Lottery</h1>
+    </div>
+    <div class="container">
+      <div class="pool">
+        <h2>Total Pool: <span id="pool-total">$0</span></h2>
+        <form id="ticket-form">
+          <label for="num-tickets">Number of Tickets:</label>
+          <input type="number" id="num-tickets" name="num-tickets" min="1" required>
+          <button type="submit" id="buy-btn">Buy</button>
+        </form>
+      </div>
+      <div class="timer">
+        <h2>Time until next draw: <span id="countdown-timer"></span></h2>
+      </div>
+      <div class="winner">
+        <h2>Draw Winner: <span id="winner-name"></span></h2>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
