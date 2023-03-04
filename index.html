@@ -1,38 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Crypto City Lottery</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script type="text/javascript" src="script.js"></script>
+  <meta charset="UTF-8">
+  <title>Crypto City Lottery</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div id="header">
-		<h1>Crypto City Lottery</h1>
-	</div>
-	<div id="main">
-		<div id="add-tickets">
-			<button onclick="addTicket()">Add Ticket</button>
-			<input type="number" id="numTickets" placeholder="Enter number of tickets">
-		</div>
-		<div id="total-tickets">
-			Total Tickets: <span id="ticketCount">0</span>
-		</div>
-		<div id="timer">
-			<div id="time">
-				Time Remaining: <span id="minutes">10</span>:<span id="seconds">00</span>
-			</div>
-			<div id="winner">
-				Last Winner: <span id="lastWinner"></span>
-			</div>
-		</div>
-		<div id="winner-box">
-			<h2>Winning Ticket:</h2>
-			<span id="winningTicket"></span>
-		</div>
-		<div id="past-winners">
-			<h2>Past Winners:</h2>
-			<ul id="winnerList"></ul>
-		</div>
-	</div>
+  <div class="container">
+    <h1 class="logo">Crypto City Lottery</h1>
+    <div class="ticket-form">
+      <label for="ticket-num">Number of Tickets:</label>
+      <input type="number" id="ticket-num" min="1" max="100">
+      <button id="add-ticket-btn">Add Ticket(s)</button>
+    </div>
+    <div class="total-tickets">
+      Total Tickets: <span id="ticket-count">0</span>
+    </div>
+    <div class="timer">
+      Time Remaining: <span id="timer-minutes">10</span>:<span id="timer-seconds">00</span>
+    </div>
+    <div class="winner-box">
+      <h2>Last Winner:</h2>
+      <p id="last-winner"></p>
+    </div>
+    <div class="past-winners">
+      <h2>Past Winners:</h2>
+      <ul id="winner-list"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
