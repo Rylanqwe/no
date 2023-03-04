@@ -1,30 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Crypto City Lottery</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  <body>
-    <div class="header">
-      <h1>Crypto City Lottery</h1>
-    </div>
-    <div class="container">
-      <div class="pool">
-        <h2>Total Pool: <span id="pool-total">$0</span></h2>
-        <form id="ticket-form">
-          <label for="num-tickets">Number of Tickets:</label>
-          <input type="number" id="num-tickets" name="num-tickets" min="1" required>
-          <button type="submit" id="buy-btn">Buy</button>
-        </form>
-      </div>
-      <div class="timer">
-        <h2>Time until next draw: <span id="countdown-timer"></span></h2>
-      </div>
-      <div class="winner">
-        <h2>Draw Winner: <span id="winner-name"></span></h2>
-      </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+<html>
+<head>
+	<title>Crypto City Lottery</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<div class="header">
+		<h1>Crypto City Lottery</h1>
+	</div>
+	<div class="container">
+		<div class="ticket-input">
+			<h2>Enter your ticket number:</h2>
+			<input type="text" id="ticket-input">
+			<button onclick="addTicket()">Add Ticket</button>
+			<p id="ticket-error"></p>
+		</div>
+		<div class="pool">
+			<h2>Current Pool Size: <span id="pool-size">0</span></h2>
+			<button onclick="drawWinner()">Draw Winner</button>
+			<p id="winner"></p>
+			<p id="draw-timer"></p>
+		</div>
+	</div>
+	<script src="script.js"></script>
+</body>
 </html>
