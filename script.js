@@ -1,65 +1,46 @@
-// Initialize variables
-let ticketPool = 0;
-let tickets = [];
-
 // Get HTML elements
-const ticketPoolElement = document.getElementById('ticket-pool');
-const ticketCountElement = document.getElementById('ticket-count');
-const ticketInput = document.getElementById('ticket-input');
-const drawTimeElement = document.getElementById('draw-time');
+const addTicketBtn = document.getElementById('add-ticket-btn');
+const totalTicketsDisplay = document.getElementById('total-tickets');
+const timerDisplay = document.getElementById('timer-display');
+const winnersList = document.getElementById('winners-list');
 
-// Function to add tickets to the pool
-function addTickets() {
-  const newTickets = parseInt(ticketInput.value);
-  if (!isNaN(newTickets) && newTickets > 0) {
-    tickets = [...tickets, ...Array(newTickets).fill(tickets.length)];
-    ticketCountElement.innerText = tickets.length;
-    ticketInput.value = "";
-    updateTicketPool();
-  }
+// Set up variables
+let totalTickets = 0;
+let secondsRemaining = 600;
+let isTimerRunning = true;
+let winners = [];
+
+// Functions
+function addTicket() {
+	const ticketCount = parseInt(prompt('How many tickets would you like to add?'));
+	if (!isNaN(ticketCount)) {
+		totalTickets += ticketCount;
+		totalTicketsDisplay.textContent = totalTickets;
+	}
 }
 
-// Function to update ticket pool display
-function updateTicketPool() {
-  ticketPool = tickets.length;
-  ticketPoolElement.innerText = ticketPool;
+function startTimer() {
+	setInterval(function() {
+		if (secondsRemaining <= 0) {
+			drawWinner();
+			resetTimer();
+		} else {
+			secondsRemaining--;
+			const minutes = Math.floor(secondsRemaining / 60);
+			const seconds = secondsRemaining % 60;
+			timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+		}
+	}, 1000);
 }
 
-// Function to start draw timer
-function startDrawTimer() {
-  let secondsLeft = 10 * 60;
-  let minutes, seconds;
-
-  function countdown() {
-    minutes = Math.floor(secondsLeft / 60);
-    seconds = secondsLeft % 60;
-
-    drawTimeElement.innerText = `${minutes}m ${seconds}s`;
-
-    if (secondsLeft === 0) {
-      drawWinner();
-      secondsLeft = 10 * 60;
-      updateTicketPool();
-    } else {
-      secondsLeft--;
-      setTimeout(countdown, 1000);
-    }
-  }
-
-  countdown();
-}
-
-// Function to draw a winner
 function drawWinner() {
-  const winnerIndex = Math.floor(Math.random() * ticketPool);
-  const winnerTicket = tickets[winnerIndex];
-  alert(`The winner is ticket number ${winnerTicket}!`);
-  tickets = [];
-  ticketCountElement.innerText = 0;
-}
-
-// Add event listeners
-document.getElementById('add-tickets-btn').addEventListener('click', addTickets);
-
-// Start draw timer on page load
-startDrawTimer();
+	if (totalTickets > 0) {
+		const winningTicket = Math.floor(Math.random() * totalTickets) + 1;
+		winners.unshift(winningTicket);
+		if (winners.length > 10) {
+			winners.pop();
+		}
+		renderWinners();
+		alert(`Winner: Ticket #${winningTicket}`);
+	} else {
+	
