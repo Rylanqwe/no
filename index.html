@@ -1,32 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Crypto City Lottery</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <div class="container">
-      <h1>Crypto City Lottery</h1>
-      <p>Current jackpot: <span id="jackpot">0</span> ETH</p>
-      <div class="tickets-container">
-        <h2>Enter your ticket number:</h2>
-        <input type="number" id="ticket-input">
-        <button id="add-ticket-button">Add Ticket</button>
-      </div>
-      <div class="pool-container">
-        <h2>Ticket Pool:</h2>
-        <ul id="ticket-pool"></ul>
-      </div>
-      <div class="winner-container">
-        <h2>Winner:</h2>
-        <p id="winner"></p>
-      </div>
-      <div class="countdown-container">
-        <h2>Time until draw:</h2>
-        <p id="countdown"></p>
-      </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+<head>
+	<title>Crypto City Lottery</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<header>
+		<h1>Crypto City Lottery</h1>
+	</header>
+	<main>
+		<div class="ticket-container">
+			<button id="add-ticket-btn">Add Ticket</button>
+			<p>Total Tickets: <span id="total-tickets">0</span></p>
+		</div>
+		<div class="timer-container">
+			<p id="timer-display">10:00</p>
+		</div>
+		<div class="winner-container">
+			<h2>Recent Winners:</h2>
+			<ul id="winners-list"></ul>
+		</div>
+	</main>
+	<script src="script.js"></script>
+</body>
 </html>
