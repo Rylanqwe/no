@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Crypto City Lottery</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <h1 class="logo">Crypto City Lottery</h1>
-    <div class="ticket-form">
-      <label for="ticket-num">Number of Tickets:</label>
-      <input type="number" id="ticket-num" min="1" max="100">
-      <button id="add-ticket-btn">Add Ticket(s)</button>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto City Lottery</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Crypto City Lottery</h1>
+      <div class="button-container">
+        <button class="button" onclick="addTickets()">Add Tickets</button>
+      </div>
+      <div class="ticket-counter-container">
+        <p class="ticket-counter">Total Tickets: <span id="totalTickets">0</span></p>
+      </div>
+      <div class="timer-container">
+        <p class="timer">Time Remaining: <span id="timerMinutes">10</span>:<span id="timerSeconds">00</span></p>
+      </div>
+      <div class="winner-container">
+        <p class="winner-text">Last Winning Ticket: <span id="lastWinner"></span></p>
+      </div>
+      <div class="past-winners-container">
+        <p class="past-winners-title">Past Winners:</p>
+        <ul id="pastWinners"></ul>
+      </div>
     </div>
-    <div class="total-tickets">
-      Total Tickets: <span id="ticket-count">0</span>
-    </div>
-    <div class="timer">
-      Time Remaining: <span id="timer-minutes">10</span>:<span id="timer-seconds">00</span>
-    </div>
-    <div class="winner-box">
-      <h2>Last Winner:</h2>
-      <p id="last-winner"></p>
-    </div>
-    <div class="past-winners">
-      <h2>Past Winners:</h2>
-      <ul id="winner-list"></ul>
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
