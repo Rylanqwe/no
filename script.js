@@ -1,64 +1,56 @@
-let totalTickets = 0;
-let ticketList = [];
-let winnerList = [];
+// define variables
+let ticketCount = 0;
+let winningTickets = [];
+let interval;
 
-// Function to add tickets to pool
-function addTickets() {
-  const newTickets = parseInt(document.getElementById('ticketNumber').value);
-  if (!isNaN(newTickets)) {
-    totalTickets += newTickets;
-    ticketList.push(newTickets);
-    document.getElementById('ticketNumber').value = '';
-    updateTotalTickets();
+// define functions
+function addTicket() {
+  const input = document.getElementById("numTickets");
+  const numTickets = parseInt(input.value);
+  if (isNaN(numTickets) || numTickets < 1) {
+    alert("Please enter a valid number of tickets.");
+    return;
   }
+  ticketCount += numTickets;
+  document.getElementById("ticketCount").textContent = ticketCount;
+  input.value = "";
 }
 
-// Function to update the total ticket count on the page
-function updateTotalTickets() {
-  document.getElementById('totalTickets').innerHTML = totalTickets;
-}
-
-// Function to start the timer and schedule the drawing of winners
 function startTimer() {
-  const timeLeft = 10 * 60; // 10 minutes in seconds
-  let timeRemaining = timeLeft;
-  let intervalId = setInterval(() => {
-    let minutes = Math.floor(timeRemaining / 60);
-    let seconds = timeRemaining % 60;
-    document.getElementById('timer').innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-    timeRemaining--;
-    if (timeRemaining < 0) {
-      clearInterval(intervalId);
+  let seconds = 10 * 60;
+  interval = setInterval(() => {
+    const minutesRemaining = Math.floor(seconds / 60);
+    const secondsRemaining = seconds % 60;
+    document.getElementById("timer").textContent = `${minutesRemaining
+      .toString()
+      .padStart(2, "0")}:${secondsRemaining.toString().padStart(2, "0")}`;
+    seconds--;
+    if (seconds < 0) {
+      clearInterval(interval);
       drawWinner();
       startTimer();
     }
   }, 1000);
 }
 
-// Function to draw a winner and reset the timer
 function drawWinner() {
-  if (ticketList.length > 0) {
-    const winnerIndex = Math.floor(Math.random() * ticketList.length);
-    const winningTicket = ticketList.splice(winnerIndex, 1)[0];
-    winnerList.unshift(winningTicket);
-    if (winnerList.length > 10) {
-      winnerList.pop();
-    }
-    displayWinners();
-    totalTickets -= winningTicket;
-    updateTotalTickets();
-    document.getElementById('winner').innerHTML = `Last winner: ${winningTicket} tickets`;
+  const winner = Math.floor(Math.random() * ticketCount) + 1;
+  winningTickets.push(winner);
+  if (winningTickets.length > 10) {
+    winningTickets.shift();
   }
+  const winnerList = document.getElementById("winnerList");
+  winnerList.textContent = "";
+  for (let i = winningTickets.length - 1; i >= 0; i--) {
+    const li = document.createElement("li");
+    li.textContent = `#${winningTickets[i]}`;
+    winnerList.appendChild(li);
+  }
+  document.getElementById("winner").textContent = `#${winner}`;
+  ticketCount = 0;
+  document.getElementById("ticketCount").textContent = ticketCount;
 }
 
-// Function to display the list of past winners
-function displayWinners() {
-  let winnerHtml = '';
-  for (let i = 0; i < winnerList.length; i++) {
-    winnerHtml += `<li>${winnerList[i]} tickets</li>`;
-  }
-  document.getElementById('winnerList').innerHTML = winnerHtml;
-}
-
-document.getElementById('addTicketsButton').addEventListener('click', addTickets);
-startTimer();
+// attach event listeners
+document.getElementById("addTickets").addEventListener("click", addTicket);
+document.getElementById("startTimer").addEventListener("click", startTimer);
