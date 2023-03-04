@@ -1,34 +1,23 @@
 body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
   background-color: black;
-  color: gold;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
   text-align: center;
 }
 
-header {
-  background-color: gold;
-  padding: 1rem;
-  margin-bottom: 2rem;
-}
-
-.box {
-  background-color: gold;
-  padding: 2rem;
-  margin: 0 auto;
-  max-width: 600px;
-}
-
-button {
-  background-color: black;
+.title {
   color: gold;
-  padding: 0.5rem 1rem;
-  margin-left: 0.5rem;
-  border: none;
-  cursor: pointer;
+  margin-top: 0;
 }
 
-input[type="number"] {
-  width: 5rem;
-  margin-right: 0.5rem;
-  padding: 0.5rem;
-  font-size: 1rem;
- 
+.pool {
+  background-color: gold;
+  padding: 20px;
+  margin-top: 50px
