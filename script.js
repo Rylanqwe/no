@@ -1,62 +1,41 @@
-// Set up variables
-let poolTotal = 0;
-let ticketsSold = 0;
-let countdownIntervalId;
-let nextDrawTime = Date.now() + 10 * 60 * 1000; // 10 minutes from now
+let pool = [];
 
-// Get elements from HTML
-const poolTotalElem = document.getElementById('pool-total');
-const ticketForm = document.getElementById('ticket-form');
-const buyBtn = document.getElementById('buy-btn');
-const winnerNameElem = document.getElementById('winner-name');
-const countdownTimerElem = document.getElementById('countdown-timer');
+function addTicket() {
+  let ticketInput = document.getElementById("ticket-input");
+  let ticketError = document.getElementById("ticket-error");
 
-// Function to handle buying tickets
-function buyTickets(event) {
-  event.preventDefault();
-  const numTickets = parseInt(document.getElementById('num-tickets').value);
-  if (numTickets) {
-    poolTotal += numTickets;
-    ticketsSold += numTickets;
-    updatePoolTotal();
-    document.getElementById('num-tickets').value = '';
+  if (isNaN(ticketInput.value) || ticketInput.value == "") {
+    ticketError.innerHTML = "Please enter a valid ticket number.";
+    return;
   }
-}
 
-// Function to update pool total on HTML
-function updatePoolTotal() {
-  poolTotalElem.innerText = '$' + poolTotal;
-}
+  let ticketNumber = parseInt(ticketInput.value);
 
-// Function to choose a random winner
-function chooseWinner() {
-  const winnerNumber = Math.floor(Math.random() * ticketsSold) + 1;
-  winnerNameElem.innerText = 'Ticket ' + winnerNumber;
-  resetPool();
-}
-
-// Function to reset pool and clear tickets
-function resetPool() {
-  poolTotal = 0;
-  ticketsSold = 0;
-  updatePoolTotal();
-}
-
-// Function to update countdown timer
-function updateCountdown() {
-  const currentTime = Date.now();
-  const timeDifference = nextDrawTime - currentTime;
-  if (timeDifference <= 0) {
-    chooseWinner();
-    nextDrawTime = currentTime + 10 * 60 * 1000;
+  if (pool.includes(ticketNumber)) {
+    ticketError.innerHTML = "This ticket number is already in the pool.";
+    return;
   }
-  const minutes = Math.floor(timeDifference / 60000);
-  const seconds = Math.floor((timeDifference % 60000) / 1000);
-  countdownTimerElem.innerText = minutes + 'm ' + seconds + 's';
+
+  pool.push(ticketNumber);
+  ticketInput.value = "";
+  ticketError.innerHTML = "";
+  document.getElementById("pool-size").innerHTML = pool.length;
 }
 
-// Add event listeners
-ticketForm.addEventListener('submit', buyTickets);
+function drawWinner() {
+  if (pool.length == 0) {
+    document.getElementById("winner").innerHTML = "No tickets in the pool.";
+    return;
+  }
 
-// Start countdown timer
-countdownIntervalId = setInterval(updateCountdown, 1000);
+  let winnerIndex = Math.floor(Math.random() * pool.length);
+  let winner = pool[winnerIndex];
+  pool = [];
+
+  document.getElementById("winner").innerHTML = "The winner is ticket number " + winner + "!";
+  document.getElementById("pool-size").innerHTML = pool.length;
+
+  let countDownDate = new Date().getTime() + 600000; // 10 minutes from now
+
+  let x = setInterval(function() {
+   
