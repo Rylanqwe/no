@@ -1,58 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-	font-family: sans-serif;
-	margin: 0;
-	padding: 0;
+    background-color: black;
 }
 
-header {
-	background-color: #222;
-	color: white;
-	padding: 1em;
-	text-align: center;
+.header {
+    text-align: center;
+    padding: 2rem;
+    color: gold;
 }
 
-main {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding: 2em;
+.header h1 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.gold-button {
+    background-color: gold;
+    color: black;
+    padding: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.gold-button:hover {
+    background-color: #b89f5e;
 }
 
 .ticket-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-bottom: 2em;
-}
-
-.ticket-container button {
-	background-color: #4CAF50;
-	color: white;
-	border: none;
-	padding: 10px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	margin-bottom: 10px;
-	cursor: pointer;
+    text-align: center;
+    margin-top: 5rem;
 }
 
 .timer-container {
-	font-size: 2em;
-	margin-bottom: 2em;
+    text-align: center;
+    margin-top: 5rem;
 }
 
-.winner-container {
-	margin-top: 2em;
+.winners-container {
+    text-align: center;
+    margin-top: 5rem;
 }
 
-ul {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+.winners-container h2 {
+    color: gold;
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 2rem;
 }
 
-li {
-	margin-bottom: 10px;
+.winners-container ul {
+    list-style-type: none;
+    color: gold;
+}
+
+.winners-container li {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+}
+
+#timer-text {
+    font-size: 2rem;
+    color: gold;
+    font-weight: bold;
 }
