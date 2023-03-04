@@ -1,31 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
     <title>Crypto City Lottery</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
   </head>
   <body>
-    <div class="container">
-      <h1>Crypto City Lottery</h1>
-      <div class="button-container">
-        <button class="button" onclick="addTickets()">Add Tickets</button>
+    <div id="logo">Crypto City Lottery</div>
+    <div id="ticketSection">
+      <div>
+        <button id="addTicketBtn">Add Ticket(s)</button>
+        <input type="number" id="ticketCount" placeholder="Enter number of tickets" />
       </div>
-      <div class="ticket-counter-container">
-        <p class="ticket-counter">Total Tickets: <span id="totalTickets">0</span></p>
-      </div>
-      <div class="timer-container">
-        <p class="timer">Time Remaining: <span id="timerMinutes">10</span>:<span id="timerSeconds">00</span></p>
-      </div>
-      <div class="winner-container">
-        <p class="winner-text">Last Winning Ticket: <span id="lastWinner"></span></p>
-      </div>
-      <div class="past-winners-container">
-        <p class="past-winners-title">Past Winners:</p>
-        <ul id="pastWinners"></ul>
+      <div>
+        Total Tickets: <span id="totalTickets">0</span>
       </div>
     </div>
-    <script src="script.js"></script>
+    <div id="timerSection">
+      <div>
+        <button id="startBtn">Start Timer</button>
+        <button id="stopBtn">Stop Timer</button>
+      </div>
+      <div>
+        Timer: <span id="timer">10:00</span>
+      </div>
+    </div>
+    <div id="winnerSection">
+      <div>
+        Winning Ticket: <span id="winner"></span>
+      </div>
+      <div>
+        Past Winners: <span id="winners"></span>
+      </div>
+    </div>
   </body>
 </html>
