@@ -1,72 +1,50 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background-color: black;
+  background-color: black;
+  color: gold;
+  font-weight: bold;
+  text-align: center;
 }
 
-.header {
-    text-align: center;
-    padding: 2rem;
-    color: gold;
+.container {
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 20px;
 }
 
-.header h1 {
-    font-size: 4rem;
-    font-weight: bold;
+.logo {
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
-.gold-button {
-    background-color: gold;
-    color: black;
-    padding: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+button {
+  background-color: gold;
+  color: black;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin-bottom: 20px;
 }
 
-.gold-button:hover {
-    background-color: #b89f5e;
+.ticketCounter {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.ticket-container {
-    text-align: center;
-    margin-top: 5rem;
+.timer {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.timer-container {
-    text-align: center;
-    margin-top: 5rem;
+.winnerList {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-.winners-container {
-    text-align: center;
-    margin-top: 5rem;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.winners-container h2 {
-    color: gold;
-    font-weight: bold;
-    font-size: 2rem;
-    margin-bottom: 2rem;
-}
-
-.winners-container ul {
-    list-style-type: none;
-    color: gold;
-}
-
-.winners-container li {
-    margin: 1rem 0;
-    font-size: 1.2rem;
-}
-
-#timer-text {
-    font-size: 2rem;
-    color: gold;
-    font-weight: bold;
+li {
+  margin-bottom: 5px;
 }
