@@ -1,46 +1,65 @@
-let ticketPool = [];
+// Initialize variables
+let ticketPool = 0;
+let tickets = [];
 
-function addTicket() {
-  let ticketNumber = document.getElementById("ticket-input").value;
-  if (ticketNumber !== "") {
-    ticketPool.push(parseInt(ticketNumber));
-    document.getElementById("ticket-pool").innerHTML = "";
-    for (let i = 0; i < ticketPool.length; i++) {
-      let listItem = document.createElement("li");
-      listItem.innerText = ticketPool[i];
-      document.getElementById("ticket-pool").appendChild(listItem);
-    }
+// Get HTML elements
+const ticketPoolElement = document.getElementById('ticket-pool');
+const ticketCountElement = document.getElementById('ticket-count');
+const ticketInput = document.getElementById('ticket-input');
+const drawTimeElement = document.getElementById('draw-time');
+
+// Function to add tickets to the pool
+function addTickets() {
+  const newTickets = parseInt(ticketInput.value);
+  if (!isNaN(newTickets) && newTickets > 0) {
+    tickets = [...tickets, ...Array(newTickets).fill(tickets.length)];
+    ticketCountElement.innerText = tickets.length;
+    ticketInput.value = "";
+    updateTicketPool();
   }
 }
 
-function clearTickets() {
-  ticketPool = [];
-  document.getElementById("ticket-pool").innerHTML = "";
+// Function to update ticket pool display
+function updateTicketPool() {
+  ticketPool = tickets.length;
+  ticketPoolElement.innerText = ticketPool;
 }
 
-function drawWinner() {
-  let winner = ticketPool[Math.floor(Math.random() * ticketPool.length)];
-  document.getElementById("winner").innerText = winner;
-  clearTickets();
-}
+// Function to start draw timer
+function startDrawTimer() {
+  let secondsLeft = 10 * 60;
+  let minutes, seconds;
 
-function updateCountdown() {
-  let countdownElement = document.getElementById("countdown");
-  let seconds = 600;
-  let countdownInterval = setInterval(function() {
-    let minutes = Math.floor(seconds / 60);
-    let remainingSeconds = seconds % 60;
-    countdownElement.innerHTML = `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    seconds--;
-    if (seconds < 0) {
-      clearInterval(countdownInterval);
+  function countdown() {
+    minutes = Math.floor(secondsLeft / 60);
+    seconds = secondsLeft % 60;
+
+    drawTimeElement.innerText = `${minutes}m ${seconds}s`;
+
+    if (secondsLeft === 0) {
       drawWinner();
-      updateCountdown();
+      secondsLeft = 10 * 60;
+      updateTicketPool();
+    } else {
+      secondsLeft--;
+      setTimeout(countdown, 1000);
     }
-  }, 1000);
+  }
+
+  countdown();
 }
 
-document.getElementById("add-ticket-button").addEventListener("click", addTicket);
-document.getElementById("clear-tickets-button").addEventListener("click", clearTickets);
+// Function to draw a winner
+function drawWinner() {
+  const winnerIndex = Math.floor(Math.random() * ticketPool);
+  const winnerTicket = tickets[winnerIndex];
+  alert(`The winner is ticket number ${winnerTicket}!`);
+  tickets = [];
+  ticketCountElement.innerText = 0;
+}
 
-updateCountdown();
+// Add event listeners
+document.getElementById('add-tickets-btn').addEventListener('click', addTickets);
+
+// Start draw timer on page load
+startDrawTimer();
