@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Crypto City Lottery</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="title">Crypto City Lottery</h1>
-      <div class="pool">
-        <h3 class="pool-title">Current Pool Total:</h3>
-        <p class="pool-total">$0</p>
-        <div class="button-container">
-          <button class="button" onclick="addTickets()">Add Tickets</button>
-        </div>
-        <div class="button-container">
-          <button class="button" onclick="clearTickets()">Clear Tickets</button>
-        </div>
-      </div>
-      <div class="timer-container">
-        <h3 class="timer-title">Next Draw in:</h3>
-        <p class="timer" id="timer"></p>
-      </div>
-    </div>
-    <script src="script.js"></script>
-  </body>
+<head>
+	<title>Crypto City Lottery</title>
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+	<div class="header">
+		<h1>Crypto City Lottery</h1>
+	</div>
+	<div class="container">
+		<div class="ticket-container">
+			<h2>Tickets</h2>
+			<p id="ticket-count">0</p>
+			<button onclick="buyTicket()">Buy Ticket</button>
+		</div>
+		<div class="pool-container">
+			<h2>Pool</h2>
+			<p id="pool-count">0</p>
+		</div>
+		<div class="winner-container">
+			<h2>Winner</h2>
+			<p id="winner"></p>
+		</div>
+		<div class="draw-timer-container">
+			<h2>Next Draw In</h2>
+			<p id="draw-timer"></p>
+		</div>
+	</div>
+	<script type="text/javascript" src="script.js"></script>
+</body>
 </html>
