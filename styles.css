@@ -1,26 +1,24 @@
-body {
-	font-family: Arial, sans-serif;
-	text-align: center;
+.container {
+  text-align: center;
 }
 
-h1 {
-	font-size: 3rem;
-	margin-bottom: 2rem;
+.tickets-container, .pool-container, .winner-container, .countdown-container {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid black;
+  display: inline-block;
+  vertical-align: top;
 }
 
-.ticket-section {
-	margin: 2rem auto;
-	width: 80%;
-	max-width: 600px;
+.tickets-container input[type="number"], .tickets-container button {
+  margin: 10px;
 }
 
-.winner-section {
-	margin: 2rem auto;
-	width: 80%;
-	max-width: 600px;
+.tickets-container h2, .pool-container h2, .winner-container h2, .countdown-container h2 {
+  margin-top: 0px;
 }
 
-textarea {
-	display: block;
-	margin: 0 auto;
-	width
+#ticket-pool {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
