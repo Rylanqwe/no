@@ -1,64 +1,65 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f5f5f5;
+	margin: 0;
+}
+
+.header {
+	background-color: #ffc107;
+	color: #fff;
+	padding: 20px;
+	text-align: center;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background-color: black;
-  color: gold;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 80vh;
 }
 
-.title {
-  font-size: 3rem;
-  margin-bottom: 2rem;
+.ticket-input {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 30px;
 }
 
-.subtitle {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.pool {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-.btn {
-  background-color: gold;
-  color: black;
-  border: none;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-right: 1rem;
+button {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin: 5px;
 }
 
-.ticket-area,
-.pool-area,
-.winner-area {
-  margin: 2rem 0;
+button:hover {
+	background-color: #3e8e41;
 }
 
-.ticket-count,
-.pool-count,
-.winner-info {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+#ticket-error {
+	color: red;
 }
 
-.pool-count,
-.winner-count {
-  font-weight: bold;
+#winner {
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 20px;
+	text-align: center;
 }
 
-.winner-number {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-}
-
-.draw-timer {
-  font-size: 1.5rem;
-  margin-top: 1rem;
+#draw-timer {
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 20px;
+	text-align: center;
 }
