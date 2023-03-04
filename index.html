@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Crypto City Lottery</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <title>Crypto City Lottery</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <h1>Crypto City Lottery</h1>
-    </div>
-    <div class="ticket-container">
-        <button id="add-ticket-button" class="gold-button">Add Tickets</button>
-        <p>Total Tickets: <span id="total-ticket-count">0</span></p>
-    </div>
-    <div class="timer-container">
-        <p id="timer-text">Time Left: <span id="timer-minutes">10</span>:<span id="timer-seconds">00</span></p>
-    </div>
-    <div class="winners-container">
-        <h2>Recent Winners:</h2>
-        <ul id="winners-list"></ul>
-    </div>
-    <script src="script.js"></script>
+  <div class="container">
+    <h1 class="logo">Crypto City Lottery</h1>
+    <button id="addTicketBtn">Add Ticket</button>
+    <div class="ticketCounter">Total tickets: <span id="ticketCount">0</span></div>
+    <div class="timer">Time left: <span id="timeLeft">10:00</span></div>
+    <div class="winnerList">Winning Tickets:</div>
+    <ul id="list"></ul>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
