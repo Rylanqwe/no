@@ -1,56 +1,66 @@
-// define variables
-let ticketCount = 0;
-let winningTickets = [];
-let interval;
+// Lottery game logic
 
-// define functions
+const TICKET_PRICE = 1;
+
+let tickets = [];
+let totalTickets = 0;
+let winners = [];
+
+let countdown;
+
 function addTicket() {
-  const input = document.getElementById("numTickets");
-  const numTickets = parseInt(input.value);
-  if (isNaN(numTickets) || numTickets < 1) {
-    alert("Please enter a valid number of tickets.");
-    return;
+  const count = parseInt(document.getElementById("ticketCount").value);
+  if (!isNaN(count) && count > 0) {
+    for (let i = 0; i < count; i++) {
+      tickets.push(Math.floor(Math.random() * 1000));
+    }
+    totalTickets += count;
+    document.getElementById("totalTickets").innerText = totalTickets;
+    document.getElementById("ticketCount").value = "";
   }
-  ticketCount += numTickets;
-  document.getElementById("ticketCount").textContent = ticketCount;
-  input.value = "";
 }
 
 function startTimer() {
-  let seconds = 10 * 60;
-  interval = setInterval(() => {
-    const minutesRemaining = Math.floor(seconds / 60);
-    const secondsRemaining = seconds % 60;
-    document.getElementById("timer").textContent = `${minutesRemaining
-      .toString()
-      .padStart(2, "0")}:${secondsRemaining.toString().padStart(2, "0")}`;
-    seconds--;
-    if (seconds < 0) {
-      clearInterval(interval);
+  const TEN_MINUTES = 600;
+  let timeLeft = TEN_MINUTES;
+  countdown = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    document.getElementById("timer").innerText = `${minutes}:${seconds}`;
+    timeLeft--;
+    if (timeLeft < 0) {
       drawWinner();
-      startTimer();
+      timeLeft = TEN_MINUTES;
     }
   }, 1000);
 }
 
-function drawWinner() {
-  const winner = Math.floor(Math.random() * ticketCount) + 1;
-  winningTickets.push(winner);
-  if (winningTickets.length > 10) {
-    winningTickets.shift();
-  }
-  const winnerList = document.getElementById("winnerList");
-  winnerList.textContent = "";
-  for (let i = winningTickets.length - 1; i >= 0; i--) {
-    const li = document.createElement("li");
-    li.textContent = `#${winningTickets[i]}`;
-    winnerList.appendChild(li);
-  }
-  document.getElementById("winner").textContent = `#${winner}`;
-  ticketCount = 0;
-  document.getElementById("ticketCount").textContent = ticketCount;
+function stopTimer() {
+  clearInterval(countdown);
 }
 
-// attach event listeners
-document.getElementById("addTickets").addEventListener("click", addTicket);
-document.getElementById("startTimer").addEventListener("click", startTimer);
+function drawWinner() {
+  if (tickets.length > 0) {
+    const winnerIndex = Math.floor(Math.random() * tickets.length);
+    const winner = tickets[winnerIndex];
+    winners.push(winner);
+    if (winners.length > 10) {
+      winners.shift();
+    }
+    document.getElementById("winners").innerText = winners.join(", ");
+    tickets = [];
+    totalTickets = 0;
+    document.getElementById("totalTickets").innerText = totalTickets;
+    document.getElementById("ticketCount").value = "";
+    stopTimer();
+    startTimer();
+    document.getElementById("winner").innerText = winner;
+  }
+}
+
+// Event listeners
+
+document.getElementById("addTicketBtn").addEventListener("click", addTicket);
+document.getElementById("startBtn").addEventListener("click", startTimer);
+document.getElementById("stopBtn").addEventListener("click", stopTimer);
